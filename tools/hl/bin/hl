@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/hl"
+
+begin
+  HL::Application.new(ARGV).run
+rescue Errno::ENOENT => err
+  abort "hl: #{err.message}"
+rescue OptionParser::InvalidOption => err
+  abort "hl: #{err.message}\nusage: hl [command] FIMXE(Figure this out)"
+end
