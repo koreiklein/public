@@ -68,6 +68,11 @@ module HL
 
     def command_serve(args)
       args, params = gather_args_serve
+      if args.length < 2
+        puts "usage: hl serve PATH_TO_LEARNING_PATH"
+        exit 1
+      end
+      post('/servers', learning_path_name: args[1].split('/')[1])
     end
 
     def get(dir, *args)
@@ -120,7 +125,7 @@ module HL
       # It's necessary to reopen because Minitar closes the tgz file.
       response = nil
       File.open("/tmp/#{root_dir.basename}.tar.gz", "rb") do |file|
-        response = puts(put("/libraries/#{id}", repository: file).body)
+        response = put("/libraries/#{id}", repository: file)
       end
     end
 
